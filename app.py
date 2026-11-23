@@ -77,7 +77,7 @@ if uploaded_file is not None:
     gdf_espana_4326, gdf_espana_utm = cargar_cartografia_ign(CODIGO_PROVINCIA_INE)
 
     if gdf_espana_utm is not None:
-        df = pd.read_excel(uploaded_file, sheet_name=0)
+        df = pd.read_excel(uploaded_file, sheet_name=1)
 
         # Autodetección robusta de columnas
         def detectar_col(lista_columnas, preferida, alternativas):
