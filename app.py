@@ -91,10 +91,10 @@ if uploaded_file is not None:
 
         lista_cols = list(df.columns)
         COL_ID = detectar_col(lista_cols, "ID", ["id", "código", "codigo", "nº", "numero", "clave"])
-        COL_RECURSO = detectar_col(lista_cols, "Nombre establecimiento", ["recurso", "denominacion", "denominación", "nombre", "activo", "nombre establecimiento", "nombre_establecimiento"])
-        COL_MUNICIPIO = detectar_col(lista_cols, "Municipio", ["municipio", "poblacion", "población", "localidad"])
-        COL_LATITUD = detectar_col(lista_cols, "Latitud", ["latitud", "lat", "y", "latitude"])
-        COL_LONGITUD = detectar_col(lista_cols, "Longitud", ["longitud", "lon", "lng", "x", "longitude"])
+        COL_RECURSO = detectar_col(lista_cols, "NOMBRE ACTIVO CORREGIDO", ["recurso", "denominacion", "denominación", "nombre", "activo", "nombre establecimiento", "nombre_establecimiento"])
+        COL_MUNICIPIO = detectar_col(lista_cols, "MUNICIPIO", ["municipio", "poblacion", "población", "localidad"])
+        COL_LATITUD = detectar_col(lista_cols, "LATITUD", ["latitud", "lat", "y", "latitude"])
+        COL_LONGITUD = detectar_col(lista_cols, "LONGITUD", ["longitud", "lon", "lng", "x", "longitude"])
 
         # Validación de existencia real de columnas críticas detectadas
         columnas_faltantes = [c for c in [COL_LATITUD, COL_LONGITUD] if c not in df.columns]
