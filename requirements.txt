@@ -6,3 +6,4 @@ shapely
 openpyxl
 pyogrio
 folium
+streamlit-folium
