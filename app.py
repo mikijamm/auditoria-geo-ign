@@ -20,7 +20,7 @@ def normalizar_texto(texto):
         return ""
     texto = texto.strip().lower()
     texto = unicodedata.normalize("NFKD", texto)
-    return """.join(c for c in texto if not unicodedata.combining(c))
+    return "".join(c for c in texto if not unicodedata.combining(c))
 
 # --- CARGA DE CARTOGRAFÍA IGN ---
 @st.cache_data
@@ -41,7 +41,7 @@ def cargar_cartografia_ign(cod_provincia_target):
         else:
             col_ine = next((c for c in ["inecode", "cod_ine", "codigo_ine", "id", "LAU_CODE"] if c in cols_ign), None)
             if col_ine:
-                gdf_espana["COD_PROVINCIA_IGN"] = gdf_ine.astype(str).str.zfill(5).str[:2]
+                gdf_espana["COD_PROVINCIA_IGN"] = gdf_espana[col_ine].astype(str).str.zfill(5).str[:2]
             else:
                 gdf_espana["COD_PROVINCIA_IGN"] = "10"
 
