@@ -79,12 +79,22 @@ if uploaded_file is not None:
     if gdf_espana_utm is not None:
         df = pd.read_excel(uploaded_file, sheet_name=0)
         
-        # Autodetección de columnas
-        COL_ID = next((c for c in df.columns if c.strip().lower() in ["id", "código", "codigo", "nº", "numero", "clave"]), "ID")
-        COL_RECURSO = next((c for c in df.columns if c.strip().lower() in ["recurso", "denominacion", "denominación", "nombre", "activo", "nombre establecimiento"]), "Nombre establecimiento")
-        COL_MUNICIPIO = next((c for c in df.columns if c.strip().lower() in ["municipio", "poblacion", "población", "localidad"]), "Municipio")
-        COL_LATITUD = next((c for c in df.columns if c.strip().lower() in ["latitud", "lat", "y"]), "Latitud")
-        COL_LONGITUD = next((c for c in df.columns if c.strip().lower() in ["longitud", "lon", "lng", "x"]), "Longitud")
+        # Autodetección robusta de columnas
+        def detectar_col(lista_columnas, preferida, alternativas):
+            if preferida in lista_columnas:
+                return preferida
+            for alt in alternativas:
+                match = next((c for c in lista_columnas if str(c).strip().lower() == alt.lower()), None)
+                if match:
+                    return match
+            return preferida
+
+        lista_cols = list(df.columns)
+        COL_ID = detectar_col(lista_cols, "ID", ["id", "código", "codigo", "nº", "numero", "clave"])
+        COL_RECURSO = detectar_col(lista_cols, "Nombre establecimiento", ["recurso", "denominacion", "denominación", "nombre", "activo", "nombre establecimiento", "nombre_establecimiento"])
+        COL_MUNICIPIO = detectar_col(lista_cols, "Municipio", ["municipio", "poblacion", "población", "localidad"])
+        COL_LATITUD = detectar_col(lista_cols, "Latitud", ["latitud", "lat", "y", "latitude"])
+        COL_LONGITUD = detectar_col(lista_cols, "Longitud", ["longitud", "lon", "lng", "x", "longitude"])
         
         # Limpieza e indexación de coordenadas
         for col_coord in [COL_LATITUD, COL_LONGITUD]:
